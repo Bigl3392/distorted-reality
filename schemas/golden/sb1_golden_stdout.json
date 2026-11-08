@@ -1,0 +1,1 @@
+{"contract":"SB1","error":null,"flagged_cases":["inv-0002"],"manual_touch_cases":["inv-0003"],"ok":true,"resolutions":[{"case_id":"inv-0001","claimed":"completed","evidence_ref":"rcpt-0001","step_id":3},{"case_id":"inv-0002","claimed":"claimed-complete","evidence_ref":null,"step_id":3}],"self_metrics":{"exceptions_caught":1}}

@@ -1,0 +1,37 @@
+{
+  "contract": "C2",
+  "run_id": "run-001",
+  "path_id": "path-b",
+  "intervention": {
+    "summary": "b",
+    "who_does_what": [
+      {
+        "role": "Receiving Clerk",
+        "does": "x"
+      }
+    ],
+    "order": [
+      "a",
+      "b"
+    ],
+    "checks": [
+      "c"
+    ],
+    "automation": [],
+    "distinct_from": "differs in ownership and ordering"
+  },
+  "dataset_id": "eo-recv-v1",
+  "dataset_sha256": "f9c7af7ebcbf098b9f5f37361d1b168bb2e5b98d930ceef0f055377a8c94db61",
+  "test_id": "test-3way",
+  "decision_rule_sha256": "7369949b47ef2c6ba26fbbee659cedc76123a75c17d321a52d8d1ef35e948042",
+  "caps": {
+    "wall_seconds": 30,
+    "memory_mb": 256,
+    "pids": 64,
+    "cpus": 1,
+    "stdout_bytes": -1
+  },
+  "network": "none",
+  "secrets_in_job": false,
+  "approval_required_for_external_action": true
+}

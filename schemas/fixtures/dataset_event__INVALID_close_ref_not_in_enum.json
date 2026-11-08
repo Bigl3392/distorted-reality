@@ -1,0 +1,20 @@
+{
+  "label": "SYNTHETIC",
+  "source_type": "SYNTHETIC",
+  "case_id": "inv-0007",
+  "step_id": 3,
+  "role": "Receiving Clerk",
+  "action": "log delivery receipt",
+  "input": "PO-0007 delivery note",
+  "output": "receipt rcpt-0007",
+  "timestamp": "2026-11-05T15:00:00Z",
+  "duration_min": 6,
+  "expected_duration_min": 5,
+  "handoff_to": "AP Clerk",
+  "status": "completed",
+  "evidence_ref": "rcpt-0007",
+  "stall_flag": false,
+  "location": "Midtown OKC",
+  "holiday_window": "christmas",
+  "close_ref": "bank_reconciliation"
+}

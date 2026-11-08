@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.distortedreality.example/sb1_response.schema.json",
+  "title": "Contract SB1 response: sandbox stdout (one JSON document, <= caps.stdout_bytes)",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "contract": {
+          "const": "SB1"
+        },
+        "ok": {
+          "const": true
+        },
+        "flagged_cases": {
+          "type": "array",
+          "items": {
+            "$ref": "common.defs.json#/$defs/id"
+          }
+        },
+        "resolutions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "case_id": {
+                "$ref": "common.defs.json#/$defs/id"
+              },
+              "step_id": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "claimed": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evidence_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "case_id",
+              "step_id",
+              "claimed",
+              "evidence_ref"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "manual_touch_cases": {
+          "type": "array",
+          "items": {
+            "$ref": "common.defs.json#/$defs/id"
+          }
+        },
+        "self_metrics": {
+          "type": "object",
+          "properties": {
+            "exceptions_caught": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": {
+            "type": "number"
+          },
+          "description": "self-reported; stored, never used for the decision"
+        },
+        "error": {
+          "const": null
+        }
+      },
+      "required": [
+        "contract",
+        "ok",
+        "flagged_cases",
+        "resolutions",
+        "manual_touch_cases",
+        "self_metrics",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "contract": {
+          "const": "SB1"
+        },
+        "ok": {
+          "const": false
+        },
+        "error": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "contract",
+        "ok",
+        "error"
+      ],
+      "additionalProperties": false
+    }
+  ]
+}

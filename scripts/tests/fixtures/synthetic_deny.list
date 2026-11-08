@@ -1,0 +1,7 @@
+# Format sample for a synthetic deny list. Needles are written at test time
+# into a temporary list so this file is not itself a finding.
+# phrase <token>
+# exact <token>
+# scoring-name <token>
+# persona <token>
+# framing <token>

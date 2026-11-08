@@ -1,0 +1,18 @@
+{
+  "label": "SYNTHETIC",
+  "scan_version": "2",
+  "run_id": "run-001",
+  "intake_variant": "paraphrase",
+  "overall": 60,
+  "recommendation": "Review the AP reconciliation workflow evidence with the council.",
+  "answers_commitment": {
+    "alg": "HMAC-SHA256",
+    "value": "0000000000000000000000000000000000000000000000000000000000000001"
+  },
+  "limitations": [
+    "System-specific results are suppressed in public, by design, to protect the private association.",
+    "The deployed product computes only the overall index and performs no system-specific scoring."
+  ],
+  "routes_present": false,
+  "fees_present": false
+}

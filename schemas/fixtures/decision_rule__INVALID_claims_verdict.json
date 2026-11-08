@@ -1,0 +1,27 @@
+{
+  "rule_id": "dr-3way-v1",
+  "eligibility": {
+    "claims_verdict": "CLAIMS_FAIL",
+    "unsupported_claims_max": 0,
+    "false_alarms_max_fraction_of_cases": 0.1
+  },
+  "ranking": [
+    {
+      "metric": "exceptions_caught"
+    },
+    {
+      "metric": "manual_touches"
+    },
+    {
+      "metric": "median_cycle_min"
+    }
+  ],
+  "minimum_margin": {
+    "exceptions_caught": 3
+  },
+  "outcomes": [
+    "PATH_PREFERRED_UNDER_ASSUMPTIONS",
+    "NO_SUFFICIENT_EVIDENCE"
+  ],
+  "notes": "Synthetic data. A preferred path is preferred under these assumptions only."
+}

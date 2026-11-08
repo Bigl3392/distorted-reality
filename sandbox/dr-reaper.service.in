@@ -1,0 +1,5 @@
+[Unit]
+Description=Remove expired task containers
+[Service]
+Type=oneshot
+ExecStart=<<PYTHON_ABSOLUTE_PATH>> <<REAPER_ABSOLUTE_PATH>> --docker <<DOCKER_ABSOLUTE_PATH>> --operation-seconds <<APPROVED_OPERATION_SECONDS>>

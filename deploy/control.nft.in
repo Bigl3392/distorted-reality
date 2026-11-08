@@ -1,0 +1,23 @@
+# Candidate only: inspect alongside the existing ruleset; never flush unknown rules.
+table inet dr_control {
+ chain input {
+  type filter hook input priority 0; policy drop;
+  iifname "lo" accept
+  ct state established,related accept
+  ip saddr <<OPERATOR_IPV4_CIDR>> tcp dport 22 accept
+  tcp dport 443 accept
+  ip protocol icmp accept
+ }
+ chain forward { type filter hook forward priority 0; policy drop; }
+ chain output {
+  type filter hook output priority 0; policy drop;
+  oifname "lo" accept
+  ct state established,related accept
+  ip daddr <<SANDBOX_IPV4>> tcp dport 22 accept
+  ip daddr <<DNS_IPV4>> udp dport 53 accept
+  ip daddr <<DNS_IPV4>> tcp dport 53 accept
+  ip daddr <<NTP_IPV4>> udp dport 123 accept
+  tcp dport 443 accept
+  ip protocol icmp accept
+ }
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.distortedreality.example/sb1_request.schema.json",
+  "title": "Contract SB1 request: control -> sandbox stdin (one JSON document)",
+  "type": "object",
+  "properties": {
+    "contract": {
+      "const": "SB1"
+    },
+    "code": {
+      "type": "string",
+      "minLength": 1,
+      "description": "apply.py source, utf-8; stdlib only; defines apply(events: list[dict]) -> dict"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "dataset_event.schema.json"
+      }
+    },
+    "caps": {
+      "$ref": "https://schemas.distortedreality.example/blackbox_job.schema.json#/properties/caps",
+      "description": "echo of C2 caps"
+    }
+  },
+  "required": [
+    "contract",
+    "code",
+    "events",
+    "caps"
+  ],
+  "additionalProperties": false
+}

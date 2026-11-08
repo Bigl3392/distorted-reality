@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.distortedreality.example/blackbox_run.schema.json",
+  "title": "Contract C3 part: Blackbox run receipt (control-plane written)",
+  "type": "object",
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+    },
+    "path_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+    },
+    "attempt": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2
+    },
+    "sandbox_id": {
+      "type": "string"
+    },
+    "image_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ended_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "destroyed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "destroy_verified": {
+      "type": "boolean"
+    },
+    "caps": {
+      "$ref": "blackbox_job.schema.json#/properties/caps"
+    },
+    "docker_flags_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "exit_status": {
+      "type": "integer"
+    },
+    "termination": {
+      "enum": [
+        "normal",
+        "timeout_killed",
+        "oom_killed",
+        "pids_killed",
+        "error"
+      ]
+    },
+    "peak_memory_mb": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "stdout_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "events_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "events_count": {
+      "type": "integer"
+    },
+    "secret_scan": {
+      "type": "object",
+      "properties": {
+        "canary_present_in_env": {
+          "const": false
+        },
+        "scan_passed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "canary_present_in_env",
+        "scan_passed"
+      ],
+      "additionalProperties": false
+    },
+    "metrics_recomputed": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "metrics_self_reported": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "metrics_discrepancy": {
+      "type": "boolean"
+    },
+    "claim_check": {
+      "$ref": "claim_check.schema.json"
+    },
+    "journal_head_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "required": [
+    "run_id",
+    "path_id",
+    "attempt",
+    "sandbox_id",
+    "image_digest",
+    "created_at",
+    "started_at",
+    "ended_at",
+    "destroyed_at",
+    "destroy_verified",
+    "caps",
+    "docker_flags_sha256",
+    "exit_status",
+    "termination",
+    "peak_memory_mb",
+    "stdout_sha256",
+    "events_sha256",
+    "events_count",
+    "secret_scan",
+    "metrics_recomputed",
+    "metrics_self_reported",
+    "metrics_discrepancy",
+    "claim_check",
+    "journal_head_sha256"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,183 @@
+{
+  "label": "SYNTHETIC",
+  "packet_version": "1",
+  "packet_status": "INCOMPLETE",
+  "run_id": "run-001",
+  "built_at": "2026-11-05T15:00:00Z",
+  "claim_statement": "The calculation executed successfully under these assumptions. This does not establish that any intervention will improve an actual business.",
+  "synthetic_notice": "ALL DATA IN THIS PACKET IS SYNTHETIC.",
+  "failed_at": "COUNCIL_CRITIC",
+  "failure_reason": "critic output could not be parsed after the permitted extraction attempt",
+  "dataset": {
+    "label": "SYNTHETIC",
+    "dataset_id": "eo-recv-v1",
+    "fictional_entity": "Ember & Oak Hospitality Group (EO-OKC-01)",
+    "generator": "gen_dataset.py",
+    "generator_version": "1.0.0",
+    "seed": 20261103,
+    "row_count": 1400,
+    "case_count": 200,
+    "roles": [
+      "Kitchen Manager",
+      "Receiving Clerk",
+      "AP Clerk",
+      "Controller"
+    ],
+    "injected_faults": [
+      {
+        "fault_id": "f-missing-receipts",
+        "description": "7 cases claimed complete with no receiving receipt",
+        "affected_cases": [
+          "inv-0007"
+        ],
+        "disclosed": true
+      }
+    ],
+    "dataset_sha256": "f9c7af7ebcbf098b9f5f37361d1b168bb2e5b98d930ceef0f055377a8c94db61",
+    "created": "2026-11-05T15:00:00Z",
+    "limitations": "Synthetic. Not calibrated to any real business.",
+    "arm": "flagship",
+    "period": {
+      "start": "2025-12-01",
+      "end": "2026-02-28"
+    },
+    "drivers": [
+      "season",
+      "weather",
+      "holidays"
+    ],
+    "cases_per_location": {
+      "Midtown OKC": 50,
+      "Riverside Tulsa": 50,
+      "Commons Norman": 50,
+      "Market Hall Edmond": 50
+    },
+    "external_public_facts": [
+      {
+        "kind": "weather",
+        "source": "SOURCE_PENDING_CONFIRMATION",
+        "retrieved": "2026-11-04"
+      }
+    ],
+    "explanation_layers": [
+      {
+        "kind": "weather_daily",
+        "winters": [
+          "2022-23",
+          "2023-24",
+          "2024-25",
+          "2025-26"
+        ],
+        "proof_period_only": false,
+        "source": "SOURCE_PENDING_CONFIRMATION"
+      },
+      {
+        "kind": "holiday_calendar",
+        "winters": [
+          "2022-23",
+          "2023-24",
+          "2024-25",
+          "2025-26"
+        ],
+        "proof_period_only": false
+      },
+      {
+        "kind": "monthly_baseline",
+        "winters": [
+          "2025-26"
+        ],
+        "proof_period_only": true
+      }
+    ]
+  },
+  "mri": {
+    "label": "SYNTHETIC",
+    "mri_version": "1",
+    "run_id": "run-001",
+    "dataset_id": "eo-recv-v1",
+    "dataset_sha256": "f9c7af7ebcbf098b9f5f37361d1b168bb2e5b98d930ceef0f055377a8c94db61",
+    "scanned_at": "2026-11-05T15:00:00Z",
+    "read_only": true,
+    "authorizes": "nothing",
+    "steps": [
+      {
+        "step_id": 3,
+        "name": "Log delivery receipt",
+        "owner_role": "Receiving Clerk",
+        "input_type": "delivery note",
+        "output_type": "receipt",
+        "size_rows": 200,
+        "last_touched": "2026-11-05T15:00:00Z",
+        "location": "dataset:eo-recv-v1",
+        "handoff_to": "AP Clerk",
+        "median_duration_min": 6,
+        "expected_duration_min": 5,
+        "stall_rate": 0.04,
+        "claimed_complete_count": 200,
+        "claimed_without_evidence_count": 7
+      }
+    ],
+    "handoffs": [
+      {
+        "from_role": "Receiving Clerk",
+        "to_role": "AP Clerk",
+        "count": 200,
+        "median_wait_min": 190
+      }
+    ],
+    "stall_points": [
+      {
+        "step_id": 3,
+        "reason": "receipt missing at handoff",
+        "rate": 0.035
+      }
+    ],
+    "inventory_sha256": "86b37331530f5e63d29e129730a17f212fc3c296af232676a26342bdd33e1897"
+  },
+  "scan": {
+    "label": "SYNTHETIC",
+    "scan_version": "2",
+    "run_id": "run-001",
+    "intake_variant": "paraphrase",
+    "overall": 60,
+    "recommendation": "Review the AP reconciliation workflow evidence with the council.",
+    "answers_commitment": {
+      "alg": "HMAC-SHA256",
+      "value": "0000000000000000000000000000000000000000000000000000000000000001"
+    },
+    "limitations": [
+      "System-specific results are suppressed in public, by design, to protect the private association.",
+      "The deployed product computes only the overall index and performs no system-specific scoring."
+    ],
+    "routes_present": false,
+    "fees_present": false
+  },
+  "outcome": {
+    "result": "NO_SUFFICIENT_EVIDENCE",
+    "preferred_path_id": null,
+    "basis": "Run failed closed before any execution; no path was compared."
+  },
+  "assumptions": [
+    "a"
+  ],
+  "unknowns": [
+    "u"
+  ],
+  "did_not_prove": [
+    "real-world improvement"
+  ],
+  "limitations": [
+    "single dataset"
+  ],
+  "approval_gate": {
+    "status": "PENDING",
+    "external_action_taken": false,
+    "confirmed_at": null
+  },
+  "assurance_tier": "T0",
+  "journal": {
+    "head_sha256": "189f40034be7a199f1fa9891668ee3ab6049f82d38c68be70f596eab2e1857b7",
+    "entries": 42
+  },
+  "packet_sha256": "eb3102a6cb586765d01fad324523ec0bc67b9efd6a2d9589c135adfedf7922cc"
+}

@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.distortedreality.example/claim_check.schema.json",
+  "title": "Claim-vs-evidence check result",
+  "type": "object",
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+    },
+    "path_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+    },
+    "claims_total": {
+      "type": "integer"
+    },
+    "supported": {
+      "type": "integer"
+    },
+    "unsupported": {
+      "type": "integer"
+    },
+    "contradicted": {
+      "type": "integer"
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "claim_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+          },
+          "step_id": {
+            "type": "integer"
+          },
+          "case_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+          },
+          "claimed": {
+            "type": "string"
+          },
+          "evidence_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "result": {
+            "enum": [
+              "SUPPORTED",
+              "UNSUPPORTED",
+              "CONTRADICTED"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "claim_id",
+          "step_id",
+          "case_id",
+          "claimed",
+          "evidence_ref",
+          "result",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "recomputed_by": {
+      "const": "control_plane"
+    }
+  },
+  "required": [
+    "run_id",
+    "path_id",
+    "claims_total",
+    "supported",
+    "unsupported",
+    "contradicted",
+    "claims",
+    "recomputed_by"
+  ],
+  "additionalProperties": false
+}

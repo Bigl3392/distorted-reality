@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.distortedreality.example/weather_daily.schema.json",
+  "title": "Daily weather (PUBLIC_FACT; explanation/projection layer)",
+  "description": "Real daily weather for the city each fictional location sits in (OKC, Tulsa, Norman, Edmond). Source: Open-Meteo Historical Weather API (ERA5). Winter 2020-21 is an explanation-layer-only winter (G15 Option 2) and must carry the COVID-era label; it is never a proof-period row.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source_type",
+    "location",
+    "date",
+    "winter",
+    "tmax_f",
+    "tmin_f",
+    "precip_in",
+    "source",
+    "retrieved"
+  ],
+  "properties": {
+    "source_type": {
+      "const": "PUBLIC_FACT"
+    },
+    "location": {
+      "enum": [
+        "Midtown OKC",
+        "Riverside Tulsa",
+        "Commons Norman",
+        "Market Hall Edmond"
+      ]
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "winter": {
+      "enum": [
+        "2020-21",
+        "2022-23",
+        "2023-24",
+        "2024-25",
+        "2025-26"
+      ]
+    },
+    "tmax_f": {
+      "type": "number"
+    },
+    "tmin_f": {
+      "type": "number"
+    },
+    "precip_in": {
+      "type": "number",
+      "minimum": 0
+    },
+    "snow_in": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "source": {
+      "const": "Open-Meteo Historical Weather API (ERA5)"
+    },
+    "retrieved": {
+      "type": "string",
+      "format": "date"
+    },
+    "era_label": {
+      "const": "COVID-ERA",
+      "description": "required when winter is 2020-21"
+    },
+    "explanation_layer_only": {
+      "const": true,
+      "description": "required when winter is 2020-21"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "winter": {
+            "const": "2020-21"
+          }
+        },
+        "required": [
+          "winter"
+        ]
+      },
+      "then": {
+        "required": [
+          "era_label",
+          "explanation_layer_only"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "winter": {
+            "enum": [
+              "2022-23",
+              "2023-24",
+              "2024-25",
+              "2025-26"
+            ]
+          }
+        },
+        "required": [
+          "winter"
+        ]
+      },
+      "then": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "era_label"
+              ]
+            },
+            {
+              "required": [
+                "explanation_layer_only"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

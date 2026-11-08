@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.distortedreality.example/evidence_packet_incomplete.schema.json",
+  "title": "Contract C3-INCOMPLETE: partial evidence packet for a run that failed closed before PACKET_BUILT",
+  "description": "Mutually exclusive with evidence_packet.schema.json: that schema has additionalProperties:false and does not allow packet_status; this one requires packet_status INCOMPLETE. Outcome is always NO_SUFFICIENT_EVIDENCE. Only sections that exist are present. EVIDENCE_SPEC section 8.",
+  "type": "object",
+  "properties": {
+    "label": {
+      "const": "SYNTHETIC"
+    },
+    "packet_version": {
+      "const": "1"
+    },
+    "packet_status": {
+      "const": "INCOMPLETE"
+    },
+    "run_id": {
+      "$ref": "common.defs.json#/$defs/id"
+    },
+    "built_at": {
+      "$ref": "common.defs.json#/$defs/timestamp"
+    },
+    "claim_statement": {
+      "$ref": "https://schemas.distortedreality.example/evidence_packet.schema.json#/properties/claim_statement"
+    },
+    "synthetic_notice": {
+      "type": "string"
+    },
+    "failed_at": {
+      "anyOf": [
+        {
+          "enum": [
+            "CREATED",
+            "DATASET_LOADED",
+            "MRI_DONE",
+            "SCAN_DONE",
+            "COUNCIL_EVIDENCE",
+            "COUNCIL_PATHS",
+            "COUNCIL_CRITIC",
+            "COUNCIL_REVISION",
+            "COUNCIL_DECISION",
+            "DECISION_RULE_FROZEN",
+            "CLAIM_CHECKED"
+          ]
+        },
+        {
+          "type": "string",
+          "pattern": "^(EXEC_PATH|EXEC_CORRECTION)_[0-9]+$"
+        }
+      ],
+      "description": "the state-machine state the run was in when it failed closed"
+    },
+    "failure_reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dataset": {
+      "$ref": "dataset_manifest.schema.json"
+    },
+    "mri": {
+      "$ref": "mri_inventory.schema.json"
+    },
+    "scan": {
+      "$ref": "scan_result.schema.json"
+    },
+    "council": {
+      "$ref": "council_run.schema.json"
+    },
+    "decision_rule": {
+      "$ref": "https://schemas.distortedreality.example/evidence_packet.schema.json#/properties/decision_rule"
+    },
+    "executions": {
+      "type": "array",
+      "items": {
+        "$ref": "blackbox_run.schema.json"
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "const": "NO_SUFFICIENT_EVIDENCE"
+        },
+        "preferred_path_id": {
+          "const": null
+        },
+        "basis": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "result",
+        "preferred_path_id",
+        "basis"
+      ],
+      "additionalProperties": false
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "did_not_prove": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "string"
+      },
+      "allOf": [
+        {
+          "contains": {
+            "type": "string",
+            "pattern": "^Run failed closed at "
+          }
+        },
+        {
+          "contains": {
+            "const": "System-specific results are suppressed in public, by design, to protect the private association."
+          }
+        }
+      ]
+    },
+    "approval_gate": {
+      "$ref": "https://schemas.distortedreality.example/evidence_packet.schema.json#/properties/approval_gate"
+    },
+    "assurance_tier": {
+      "$ref": "https://schemas.distortedreality.example/evidence_packet.schema.json#/properties/assurance_tier"
+    },
+    "journal": {
+      "$ref": "https://schemas.distortedreality.example/evidence_packet.schema.json#/properties/journal"
+    },
+    "packet_sha256": {
+      "$ref": "common.defs.json#/$defs/sha256"
+    }
+  },
+  "required": [
+    "label",
+    "packet_version",
+    "packet_status",
+    "run_id",
+    "built_at",
+    "claim_statement",
+    "synthetic_notice",
+    "failed_at",
+    "failure_reason",
+    "outcome",
+    "did_not_prove",
+    "limitations",
+    "approval_gate",
+    "assurance_tier",
+    "journal",
+    "packet_sha256"
+  ],
+  "additionalProperties": false
+}

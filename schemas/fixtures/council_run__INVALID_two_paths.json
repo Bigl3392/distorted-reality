@@ -1,0 +1,117 @@
+{
+  "label": "SYNTHETIC",
+  "run_id": "run-001",
+  "models": {
+    "evidence": "mimo-v2.6-flash"
+  },
+  "evidence": {
+    "facts": [
+      "f"
+    ],
+    "constraints": [
+      "c"
+    ],
+    "uncertainties": [
+      "u"
+    ],
+    "sources": [
+      "mri",
+      "scan"
+    ]
+  },
+  "initial_paths": [
+    {
+      "path_id": "path-a",
+      "title": "path-a",
+      "intervention": {
+        "summary": "path-a",
+        "who_does_what": [
+          {
+            "role": "Receiving Clerk",
+            "does": "x"
+          }
+        ],
+        "order": [
+          "a",
+          "b"
+        ],
+        "checks": [
+          "c"
+        ],
+        "automation": [],
+        "distinct_from": "differs in ownership and ordering"
+      }
+    },
+    {
+      "path_id": "path-b",
+      "title": "path-b",
+      "intervention": {
+        "summary": "path-b",
+        "who_does_what": [
+          {
+            "role": "Receiving Clerk",
+            "does": "x"
+          }
+        ],
+        "order": [
+          "a",
+          "b"
+        ],
+        "checks": [
+          "c"
+        ],
+        "automation": [],
+        "distinct_from": "differs in ownership and ordering"
+      }
+    }
+  ],
+  "critic": {
+    "verdict": "PASS",
+    "findings": [],
+    "parse_status": "parsed"
+  },
+  "revision": {
+    "performed": false,
+    "count": 0,
+    "paths": null
+  },
+  "shuffle": {
+    "seed": 7,
+    "label_map": {
+      "option-1": "path-b",
+      "option-2": "path-a",
+      "option-3": "path-c"
+    }
+  },
+  "decision": {
+    "recommended_label": "option-1",
+    "recommended_path_id": "path-b",
+    "no_winner": false,
+    "comparison": [
+      {
+        "label": "option-1",
+        "rationale": "r",
+        "risks": [
+          "k"
+        ],
+        "confidence": "low"
+      }
+    ],
+    "qualitative_only": true
+  },
+  "agent_calls": [
+    {
+      "call_id": "call-001",
+      "role": "evidence",
+      "requested_model": "mimo-v2.6-flash",
+      "response_model": "mimo-v2.6-flash",
+      "model_match": true,
+      "started": "2026-11-05T15:00:00Z",
+      "ended": "2026-11-05T15:00:00Z",
+      "prompt_sha256": "148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940",
+      "response_sha256": "454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1",
+      "tokens_in": 100,
+      "tokens_out": 50
+    }
+  ]
+}

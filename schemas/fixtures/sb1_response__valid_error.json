@@ -1,0 +1,5 @@
+{
+  "contract": "SB1",
+  "ok": false,
+  "error": "apply() raised ValueError"
+}

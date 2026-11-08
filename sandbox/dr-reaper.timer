@@ -1,0 +1,9 @@
+[Unit]
+Description=Task container watchdog
+[Timer]
+OnBootSec=15s
+OnUnitActiveSec=15s
+AccuracySec=1s
+Unit=dr-reaper.service
+[Install]
+WantedBy=timers.target

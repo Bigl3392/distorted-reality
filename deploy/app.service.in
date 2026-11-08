@@ -1,0 +1,20 @@
+[Unit]
+Description=Synthetic workflow evidence application
+After=network-online.target
+Wants=network-online.target
+[Service]
+Type=simple
+User=<<APP_USER>>
+Group=<<APP_GROUP>>
+WorkingDirectory=<<APP_DIRECTORY>>
+EnvironmentFile=<<CONTROL_ENV_FILE>>
+ExecStart=<<APP_PYTHON_ABSOLUTE_PATH>> -m control.serve --port <<APP_PORT>>
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=<<RUNS_DIRECTORY>>
+# SSH transport path/key accessibility needs review with the chosen app user.
+[Install]
+WantedBy=multi-user.target

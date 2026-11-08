@@ -1,0 +1,7 @@
+# Versions used by ARC for the rev 4 validation run (Python 3.13.17). BUILD replays with its own pinned versions and records them.
+jsonschema==4.26.0
+referencing==0.37.0
+jsonschema-specifications==2025.9.1
+attrs==26.1.0
+rpds-py==2026.6.3
+PyYAML==6.0.3

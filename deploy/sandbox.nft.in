@@ -1,0 +1,14 @@
+table inet dr_sandbox {
+ chain input {
+  type filter hook input priority 0; policy drop;
+  iifname "lo" accept
+  ct state established,related accept
+  ip saddr <<CONTROL_IPV4>> tcp dport 22 accept
+ }
+ chain forward { type filter hook forward priority 0; policy drop; }
+ chain output {
+  type filter hook output priority 0; policy drop;
+  oifname "lo" accept
+  ct state established,related accept
+ }
+}

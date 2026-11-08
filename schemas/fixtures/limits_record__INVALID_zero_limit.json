@@ -1,0 +1,20 @@
+{
+  "record_status": "FIXTURE",
+  "record_id": "limits-fixture-001",
+  "measured_run_id": "run-001",
+  "measured_at": "2026-11-05T15:00:00Z",
+  "measured_by": "fixture",
+  "measurement": {
+    "calls_total": 0,
+    "tokens_total": 0,
+    "tokens_by_role": {
+      "path": 0
+    }
+  },
+  "proposed": {
+    "run_token_cap": 1,
+    "daily_token_budget": 1,
+    "runs_per_ip_per_hour": 0
+  },
+  "rationale": "Shape test only. Carries no authority and is not a limit."
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.distortedreality.example/common.defs.json",
+  "title": "Shared definitions",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "synthetic": {
+      "const": "SYNTHETIC"
+    },
+    "status": {
+      "enum": [
+        "completed",
+        "claimed-complete",
+        "failed",
+        "stalled"
+      ]
+    },
+    "source_type": {
+      "enum": [
+        "SYNTHETIC",
+        "PUBLIC_FACT",
+        "DERIVED_SYNTHETIC"
+      ]
+    }
+  }
+}

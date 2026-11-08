@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.distortedreality.example/dataset_event.schema.json",
+  "title": "Synthetic workflow event (one row)",
+  "description": "One row of the fixed synthetic dataset. Every row labeled SYNTHETIC. evidence_ref null on claimed-complete = bare claim.",
+  "type": "object",
+  "properties": {
+    "label": {
+      "const": "SYNTHETIC"
+    },
+    "source_type": {
+      "enum": [
+        "SYNTHETIC",
+        "PUBLIC_FACT",
+        "DERIVED_SYNTHETIC"
+      ]
+    },
+    "case_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+    },
+    "step_id": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "role": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string"
+    },
+    "input": {
+      "type": "string"
+    },
+    "output": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "duration_min": {
+      "type": "number",
+      "minimum": 0
+    },
+    "expected_duration_min": {
+      "type": "number",
+      "minimum": 0
+    },
+    "handoff_to": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "completed",
+        "claimed-complete",
+        "failed",
+        "stalled"
+      ]
+    },
+    "evidence_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "stall_flag": {
+      "type": "boolean"
+    },
+    "location": {
+      "enum": [
+        "Midtown OKC",
+        "Riverside Tulsa",
+        "Commons Norman",
+        "Market Hall Edmond"
+      ]
+    },
+    "holiday_window": {
+      "enum": [
+        "none",
+        "valentines",
+        "new_years",
+        "christmas"
+      ]
+    },
+    "close_ref": {
+      "enum": [
+        "payables_review",
+        "inventory_vs_cogs",
+        "accrual_unpaid",
+        "uncategorized_zero",
+        "variance_review",
+        null
+      ],
+      "description": "generic label of the close-practice item this step supports, or null where the step has no checklist counterpart (step 1 PO placed and step 2 Delivery counted). REQUIRED field; null is an allowed value, absence is not."
+    }
+  },
+  "required": [
+    "label",
+    "source_type",
+    "case_id",
+    "step_id",
+    "role",
+    "action",
+    "input",
+    "output",
+    "timestamp",
+    "duration_min",
+    "expected_duration_min",
+    "handoff_to",
+    "status",
+    "evidence_ref",
+    "stall_flag",
+    "location",
+    "holiday_window",
+    "close_ref"
+  ],
+  "additionalProperties": false
+}

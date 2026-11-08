@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.distortedreality.example/monthly_baseline.schema.json",
+  "title": "Monthly KPI baseline (shape from FFC monthly KPI practice; synthetic values only)",
+  "description": "Minimum-necessary: only the KPIs that move with AP/receiving quality. Other KPIs in the source practice (ticket time, labor %, cash variance) are intentionally excluded.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "label",
+    "source_type",
+    "location",
+    "month",
+    "cogs_pct",
+    "waste_pct"
+  ],
+  "properties": {
+    "label": {
+      "const": "SYNTHETIC"
+    },
+    "source_type": {
+      "enum": [
+        "SYNTHETIC",
+        "DERIVED_SYNTHETIC"
+      ]
+    },
+    "location": {
+      "enum": [
+        "Midtown OKC",
+        "Riverside Tulsa",
+        "Commons Norman",
+        "Market Hall Edmond"
+      ]
+    },
+    "month": {
+      "type": "string",
+      "pattern": "^20[0-9]{2}-(0[1-9]|1[0-2])$"
+    },
+    "cogs_pct": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "waste_pct": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    }
+  }
+}

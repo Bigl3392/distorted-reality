@@ -1,0 +1,15 @@
+# decision_rule.yaml  (X9: ARC thresholds approved by LDR as-is; BUILD co-signed at freeze review, 2026-11-04)
+# Pre-registered: this file is hashed and journaled before any execution (EVIDENCE_SPEC section 1, point 3).
+rule_id: dr-3way-v1
+eligibility:
+  claims_verdict: CLAIMS_HOLD        # path with failing claims is ineligible
+  unsupported_claims_max: 0
+  false_alarms_max_fraction_of_cases: 0.10
+ranking:                               # applied to eligible paths only
+  - metric: exceptions_caught          # higher is better
+  - metric: manual_touches             # lower is better
+  - metric: median_cycle_min           # lower is better
+minimum_margin:                        # else NO_SUFFICIENT_EVIDENCE
+  exceptions_caught: 3                 # best must beat runner-up by >= 3 cases
+outcomes: [PATH_PREFERRED_UNDER_ASSUMPTIONS, NO_SUFFICIENT_EVIDENCE]
+notes: "Synthetic data. A preferred path is preferred under these assumptions only."

@@ -1,0 +1,59 @@
+{
+  "run_id": "run-001",
+  "path_id": "path-b",
+  "attempt": 1,
+  "sandbox_id": "ctr-path-b",
+  "image_digest": "sha256:b29814cf5792e684cd75d6a7fce7a67a11887e312f87ca2ac2496d81f365ff72",
+  "created_at": "2026-11-05T15:00:00Z",
+  "started_at": "2026-11-05T15:00:00Z",
+  "ended_at": "2026-11-05T15:00:00Z",
+  "destroyed_at": "2026-11-05T15:00:00Z",
+  "destroy_verified": true,
+  "caps": {
+    "wall_seconds": 30,
+    "memory_mb": 256,
+    "pids": 64,
+    "cpus": 1,
+    "stdout_bytes": 524288
+  },
+  "docker_flags_sha256": "2934fb49d6b38adef036c28fac69f188feae09259f3184e6d9cfbd0f35454fec",
+  "exit_status": 0,
+  "termination": "normal",
+  "peak_memory_mb": 88.0,
+  "stdout_sha256": "65c74c15a686187bb6bbf9958f494fc6b80068034a659a9ad44991b08c58f2d2",
+  "events_sha256": "3f79bb7b435b05321651daefd374cdc681dc06faa65e374e38337b88ca046dea",
+  "events_count": 800,
+  "secret_scan": {
+    "canary_present_in_env": false,
+    "scan_passed": true
+  },
+  "metrics_recomputed": {
+    "exceptions_caught": 19,
+    "unsupported_claims": 0
+  },
+  "metrics_self_reported": {
+    "exceptions_caught": 19
+  },
+  "metrics_discrepancy": false,
+  "claim_check": {
+    "run_id": "run-001",
+    "path_id": "path-b",
+    "claims_total": 200,
+    "supported": 193,
+    "unsupported": 7,
+    "contradicted": 0,
+    "claims": [
+      {
+        "claim_id": "clm-0007",
+        "step_id": 3,
+        "case_id": "inv-0007",
+        "claimed": "receipt logged",
+        "evidence_ref": null,
+        "result": "UNSUPPORTED",
+        "reason": "no evidence_ref"
+      }
+    ],
+    "recomputed_by": "control_plane"
+  },
+  "journal_head_sha256": "189f40034be7a199f1fa9891668ee3ab6049f82d38c68be70f596eab2e1857b7"
+}

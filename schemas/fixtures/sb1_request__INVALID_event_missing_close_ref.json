@@ -1,0 +1,72 @@
+{
+  "contract": "SB1",
+  "code": "def apply(events):\n    \"\"\"SB1 golden apply(): deterministic, stdlib only. Not a product path; it exists so the wire contract has a byte-exact round trip (AT-C4).\"\"\"\n    flagged, res, manual = set(), [], set()\n    for e in events:\n        if e[\"status\"] == \"claimed-complete\" and e[\"evidence_ref\"] is None:\n            flagged.add(e[\"case_id\"])\n        if e[\"status\"] in (\"claimed-complete\", \"completed\"):\n            res.append({\"case_id\": e[\"case_id\"], \"step_id\": e[\"step_id\"], \"claimed\": e[\"status\"], \"evidence_ref\": e[\"evidence_ref\"]})\n        if e[\"status\"] in (\"stalled\", \"failed\"):\n            manual.add(e[\"case_id\"])\n    flagged = sorted(flagged)\n    return {\"flagged_cases\": flagged, \"resolutions\": res, \"manual_touch_cases\": sorted(manual),\n            \"self_metrics\": {\"exceptions_caught\": len(flagged)}, \"error\": None}\n",
+  "events": [
+    {
+      "label": "SYNTHETIC",
+      "source_type": "SYNTHETIC",
+      "case_id": "inv-0001",
+      "step_id": 3,
+      "role": "Receiving Clerk",
+      "action": "log delivery receipt",
+      "input": "PO-0007 delivery note",
+      "output": "receipt rcpt-0007",
+      "timestamp": "2026-11-05T15:00:00Z",
+      "duration_min": 6,
+      "expected_duration_min": 5,
+      "handoff_to": "AP Clerk",
+      "status": "completed",
+      "evidence_ref": "rcpt-0001",
+      "stall_flag": false,
+      "location": "Midtown OKC",
+      "holiday_window": "christmas"
+    },
+    {
+      "label": "SYNTHETIC",
+      "source_type": "SYNTHETIC",
+      "case_id": "inv-0002",
+      "step_id": 3,
+      "role": "Receiving Clerk",
+      "action": "log delivery receipt",
+      "input": "PO-0007 delivery note",
+      "output": "receipt rcpt-0007",
+      "timestamp": "2026-11-05T15:00:00Z",
+      "duration_min": 6,
+      "expected_duration_min": 5,
+      "handoff_to": "AP Clerk",
+      "status": "claimed-complete",
+      "evidence_ref": null,
+      "stall_flag": false,
+      "location": "Riverside Tulsa",
+      "holiday_window": "none",
+      "close_ref": "inventory_vs_cogs"
+    },
+    {
+      "label": "SYNTHETIC",
+      "source_type": "SYNTHETIC",
+      "case_id": "inv-0003",
+      "step_id": 3,
+      "role": "Receiving Clerk",
+      "action": "log delivery receipt",
+      "input": "PO-0007 delivery note",
+      "output": "receipt rcpt-0007",
+      "timestamp": "2026-11-05T15:00:00Z",
+      "duration_min": 6,
+      "expected_duration_min": 5,
+      "handoff_to": "AP Clerk",
+      "status": "stalled",
+      "evidence_ref": null,
+      "stall_flag": true,
+      "location": "Midtown OKC",
+      "holiday_window": "christmas",
+      "close_ref": "inventory_vs_cogs"
+    }
+  ],
+  "caps": {
+    "wall_seconds": 30,
+    "memory_mb": 256,
+    "pids": 64,
+    "cpus": 1,
+    "stdout_bytes": 524288
+  }
+}

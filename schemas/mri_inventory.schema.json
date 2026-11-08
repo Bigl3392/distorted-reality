@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.distortedreality.example/mri_inventory.schema.json",
+  "title": "MRI inventory (read-only, stamped)",
+  "description": "Scan->nothing. Enumerates the workflow. Authorizes nothing. Produced by control plane code, not by an LLM.",
+  "type": "object",
+  "properties": {
+    "label": {
+      "const": "SYNTHETIC"
+    },
+    "mri_version": {
+      "const": "1"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+    },
+    "dataset_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+    },
+    "dataset_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "scanned_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "read_only": {
+      "const": true
+    },
+    "authorizes": {
+      "const": "nothing"
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "step_id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner_role": {
+            "type": "string"
+          },
+          "input_type": {
+            "type": "string"
+          },
+          "output_type": {
+            "type": "string"
+          },
+          "size_rows": {
+            "type": "integer"
+          },
+          "last_touched": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "location": {
+            "type": "string"
+          },
+          "handoff_to": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "median_duration_min": {
+            "type": "number"
+          },
+          "expected_duration_min": {
+            "type": "number"
+          },
+          "stall_rate": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "claimed_complete_count": {
+            "type": "integer"
+          },
+          "claimed_without_evidence_count": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "step_id",
+          "name",
+          "owner_role",
+          "input_type",
+          "output_type",
+          "size_rows",
+          "last_touched",
+          "location",
+          "handoff_to",
+          "median_duration_min",
+          "expected_duration_min",
+          "stall_rate",
+          "claimed_complete_count",
+          "claimed_without_evidence_count"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "handoffs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "from_role": {
+            "type": "string"
+          },
+          "to_role": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer"
+          },
+          "median_wait_min": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "from_role",
+          "to_role",
+          "count",
+          "median_wait_min"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "stall_points": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "step_id": {
+            "type": "integer"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "rate": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "step_id",
+          "reason",
+          "rate"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "inventory_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "required": [
+    "label",
+    "mri_version",
+    "run_id",
+    "dataset_id",
+    "dataset_sha256",
+    "scanned_at",
+    "read_only",
+    "authorizes",
+    "steps",
+    "handoffs",
+    "stall_points",
+    "inventory_sha256"
+  ],
+  "additionalProperties": false
+}

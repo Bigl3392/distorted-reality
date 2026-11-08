@@ -1,0 +1,53 @@
+# CANDIDATE, NOT APPROVED. Proposed by Rayzer 2026-11-07 (SC-023) at LDR's request, for LDR's approval. G20: no value was ruled; these are STARTING values.
+# They become the runtime file only when LDR approves them; the first measured run confirms or revises them (change by new file, never in place).
+# Model ids are the R04 ids, unchanged from schemas/models.example.yaml. Only temperature and max_tokens are proposed; models_status is PINNED because
+# the loader refuses TEMPLATE, which does not make these values approved.
+#
+# Basis and limits of the basis (read before approving):
+# - Sizes below are Rayzer's ESTIMATES of what each role must write, from the prompts in council/prompts.py and the output shapes the parsers accept.
+#   Nothing was measured: no live call has been made. The committed fixtures are tiny placeholders and say nothing about real output size.
+# - NOT_VISIBLE: whether any of these models spends max_tokens on hidden reasoning before the visible answer. If one does, a cap that is plenty for the
+#   visible JSON can still truncate it. A truncated reply is not valid JSON, so it fails closed: evidence/path/decision/coder get one retry then the run
+#   fails closed; an unparseable critic is recorded as FAIL. Truncation costs a run, never a wrong answer. Headroom below is sized for that risk.
+# - A larger max_tokens costs nothing unless the model uses it; it raises only the worst case, shown at the bottom. The per-run and daily token caps
+#   (DR_RUN_TOKEN_CAP, DR_DAILY_TOKEN_BUDGET) are separate settings, still UNSET and still LDR's; nothing here sets them.
+# - Temperature: the schema allows 0 to 2. Low values keep a run reproducible and explainable; a small non-zero value is used where the council
+#   retries the same prompt on a parse failure (a retry at exactly 0 is likely to repeat the same failure).
+models_status: PINNED
+base_url: https://api.vultrinference.com/v1
+roles:
+  # evidence: extracts facts, constraints, uncertainties as three short lists (est. 400-700 tokens of JSON).
+  #   temperature 0.2: it must state only what the inputs support, so low; not 0 because a parse-failure retry reuses the same prompt.
+  #   max_tokens 1024: about 1.5x the top of the estimate, for list growth and a possible reasoning share.
+  evidence: {model_id: mimo-v2.6-flash, temperature: 0.2, max_tokens: 1024}
+  # path: writes exactly 3 interventions, each with summary, roles, order, checks, automation, distinct_from (est. 1,200-1,800 tokens for all three;
+  #   the revision call returns all three again). The largest JSON the council asks for, apart from code.
+  #   temperature 0.7: the three paths must differ in ownership, order, checks or automation and the Critic fails overlap; some variety helps and
+  #   the Critic and the blind Decision catch weak options. Highest value in the file, deliberately.
+  #   max_tokens 3072: about 1.7x the top of the estimate; a cut-off here wastes the whole council stage.
+  path: {model_id: glm-5.3, temperature: 0.7, max_tokens: 3072}
+  # critic: verdict plus 0-6 findings, one sentence each (est. 150-400 tokens). An unparseable reply is recorded FAIL and there is no retry.
+  #   temperature 0: it is a check, and the same paths should get the same verdict on a rerun (also keeps AT-07 reproducible).
+  #   max_tokens 1024: generous for the estimate; it is the one role with no retry, so a short cap would silently turn into FAIL.
+  critic: {model_id: deepseek-v4.1-flash-1017, temperature: 0.0, max_tokens: 1024}
+  # decision: compares up to 3 options on neutral labels: rationale, 2-3 risks, confidence each (est. 450-800 tokens). No winner is a valid answer.
+  #   temperature 0.2: qualitative judgement that should be stable and explainable; slightly above 0 for the retry reason above.
+  #   max_tokens 1536: about 2x the top of the estimate.
+  decision: {model_id: mimo-v2.6-pro, temperature: 0.2, max_tokens: 1536}
+  # coder: writes apply.py (standard library only, one function over event dicts) inside a JSON string (est. 800-1,800 tokens including escapes).
+  #   Called once per surviving path per attempt, so up to 12 calls in a run (3 paths x 2 attempts x 2 for a parse retry): the biggest worst case.
+  #   temperature 0.2: code should be deterministic enough to correct from sandbox feedback; the correction attempt changes the prompt, not the dice.
+  #   max_tokens 4096: about 2x the top of the estimate, because truncated code is the failure that costs most (a failed path attempt).
+  coder: {model_id: glm-5.3, temperature: 0.2, max_tokens: 4096}
+  # guard: disabled by default and not called anywhere in the code today (enabled: false); the schema still requires both values to be present.
+  #   Placeholders, not tuning: temperature 0 and max_tokens 256 for a short classifier label. Revisit if and when LDR enables the guard.
+  guard: {model_id: nemotron-3.5-content-safety, temperature: 0.0, max_tokens: 256, enabled: false}
+budget_fallback: {applies_to: [path, coder], model_id: glm-5.3-flash}
+excluded: [raon-1-mini-preview, auk]
+#
+# Worst-case completion tokens in one run if every call used its full cap (arithmetic from the caps above and the call structure in council/run.py and
+# control/orchestrator.py; prompt tokens are extra and unmeasured):
+#   evidence 2 calls x 1024 = 2,048; path 2 (initial + retry) + 2 (revision + retry) = 4 calls x 3,072 = 12,288; critic 1 x 1,024 = 1,024;
+#   decision 2 x 1,536 = 3,072; coder 12 x 4,096 = 49,152. Total 67,584 completion tokens. The fallback model, if the budget path is taken, uses the same caps.
+# Expected (estimate, not measured): about 6,500 completion tokens for a normal run (evidence 600, paths 1,500, critic 250, decision 600, coder 3 x 1,200),
+#   about 8,000 when the Critic flags a path and one revision (about 1,500) is made. The first measured run replaces both numbers with real ones.

@@ -1,0 +1,2 @@
+Synthetic clean fixture. label SYNTHETIC. Contact fixture@example.com.
+The variable name sync_key is a permitted lowercase identifier.

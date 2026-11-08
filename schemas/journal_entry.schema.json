@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.distortedreality.example/journal_entry.schema.json",
+  "title": "Hash-chained audit journal entry (append-only)",
+  "type": "object",
+  "properties": {
+    "seq": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+    },
+    "kind": {
+      "enum": [
+        "run_created",
+        "dataset_loaded",
+        "mri_done",
+        "scan_done",
+        "agent_call",
+        "council_done",
+        "sandbox_created",
+        "sandbox_started",
+        "sandbox_ended",
+        "sandbox_destroyed",
+        "claim_check",
+        "stress_test",
+        "approval",
+        "packet_built",
+        "packet_downloaded",
+        "error"
+      ]
+    },
+    "actor": {
+      "enum": [
+        "control",
+        "broker",
+        "runner",
+        "human"
+      ]
+    },
+    "data": {
+      "type": "object"
+    },
+    "prev_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "entry_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "required": [
+    "seq",
+    "ts",
+    "run_id",
+    "kind",
+    "actor",
+    "data",
+    "prev_sha256",
+    "entry_sha256"
+  ],
+  "additionalProperties": false
+}

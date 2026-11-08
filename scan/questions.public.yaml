@@ -1,0 +1,39 @@
+scale:
+  '1': Nothing shared
+  '2': Mostly firefighting
+  '3': Varies by person
+  '4': Written down, not dependable
+  '5': Usually dependable
+  '6': Clear at a glance
+prompt: Choose the statement that best describes how your AP team works today.
+items:
+- id: 6856d424
+  text: Each handoff between receiving, AP and managers has a named owner and a known wait time.
+- id: 3f5068ae
+  text: No single person is a single point of failure for the close.
+- id: 8c4ccda3
+  text: Delivery notes and invoices arrive through a defined channel, not scattered inboxes and paper.
+- id: 341be190
+  text: When someone is out, the close still finishes on time.
+- id: b3d92b52
+  text: We know roughly how many deliveries and invoices will arrive each week before they land.
+- id: fa504444
+  text: When speed and accuracy conflict, the team knows which one wins.
+- id: 380471d9
+  text: Priorities for the month-end close are set before the work starts, not discovered during it.
+- id: 5ce7331e
+  text: Mismatches between PO, receipt and invoice are caught before a payment recommendation, not after.
+- id: 1803decf
+  text: Any PO, receipt or invoice can be traced end to end without asking around.
+- id: a3b18be0
+  text: Seasonal and holiday spikes are planned for in scheduling and staffing.
+- id: a7194fdd
+  text: Someone other than the person doing the work reviews exceptions and approvals.
+- id: 52f13a49
+  text: The team has time to fix recurring problems, not only to clear the current queue.
+- id: b16dd83b
+  text: Everyone on the team can say what a correctly closed invoice means, and it is written down.
+- id: 3fc2de3a
+  text: A step counts as done only when something checkable exists, such as a receipt, a timestamp or a file.
+- id: d9ff4a70
+  text: Exceptions are resolved within a time the team can state.

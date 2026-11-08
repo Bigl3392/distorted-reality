@@ -1,0 +1,254 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.distortedreality.example/dataset_manifest.schema.json",
+  "title": "Dataset manifest (metadata required by mock-data doctrine)",
+  "type": "object",
+  "properties": {
+    "label": {
+      "const": "SYNTHETIC"
+    },
+    "dataset_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+    },
+    "fictional_entity": {
+      "type": "string"
+    },
+    "generator": {
+      "type": "string"
+    },
+    "generator_version": {
+      "type": "string"
+    },
+    "seed": {
+      "type": "integer"
+    },
+    "row_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "case_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "roles": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "injected_faults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "fault_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+          },
+          "description": {
+            "type": "string"
+          },
+          "affected_cases": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+            }
+          },
+          "disclosed": {
+            "const": true
+          }
+        },
+        "required": [
+          "fault_id",
+          "description",
+          "affected_cases",
+          "disclosed"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "dataset_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "limitations": {
+      "type": "string"
+    },
+    "arm": {
+      "enum": [
+        "flagship"
+      ],
+      "description": "flagship only for v1.0 build; catering/bakery arms are post-flagship submission updates (new enum values via schema version)"
+    },
+    "period": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date"
+        },
+        "end": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "additionalProperties": false
+    },
+    "drivers": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "season",
+          "weather",
+          "holidays"
+        ]
+      },
+      "minItems": 1
+    },
+    "cases_per_location": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer"
+      }
+    },
+    "external_public_facts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "enum": [
+              "weather",
+              "holiday"
+            ]
+          },
+          "source": {
+            "type": "string"
+          },
+          "retrieved": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "source",
+          "retrieved"
+        ],
+        "additionalProperties": false
+      },
+      "description": "PUBLIC_FACT inputs (real weather/holidays); fetched at build time, committed as data, never fetched at runtime"
+    },
+    "explanation_layers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "winters",
+          "proof_period_only"
+        ],
+        "properties": {
+          "kind": {
+            "enum": [
+              "weather_daily",
+              "holiday_calendar",
+              "monthly_baseline"
+            ]
+          },
+          "winters": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "enum": [
+                "2020-21",
+                "2022-23",
+                "2023-24",
+                "2024-25",
+                "2025-26"
+              ]
+            }
+          },
+          "proof_period_only": {
+            "type": "boolean",
+            "description": "false = multi-year projection/explanation layer behind the Dec-Feb 2025-26 proof period"
+          },
+          "source": {
+            "type": "string"
+          },
+          "era_labels": {
+            "type": "object",
+            "properties": {
+              "2020-21": {
+                "const": "COVID-ERA"
+              }
+            },
+            "required": [
+              "2020-21"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "winters": {
+                  "contains": {
+                    "const": "2020-21"
+                  }
+                }
+              },
+              "required": [
+                "winters"
+              ]
+            },
+            "then": {
+              "required": [
+                "era_labels"
+              ],
+              "properties": {
+                "proof_period_only": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "label",
+    "dataset_id",
+    "fictional_entity",
+    "generator",
+    "generator_version",
+    "seed",
+    "row_count",
+    "case_count",
+    "roles",
+    "injected_faults",
+    "dataset_sha256",
+    "created",
+    "limitations",
+    "arm",
+    "period",
+    "drivers",
+    "cases_per_location",
+    "external_public_facts"
+  ],
+  "additionalProperties": false
+}

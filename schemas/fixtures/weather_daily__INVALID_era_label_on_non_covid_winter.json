@@ -1,0 +1,13 @@
+{
+  "source_type": "PUBLIC_FACT",
+  "location": "Midtown OKC",
+  "date": "2025-12-25",
+  "winter": "2025-26",
+  "tmax_f": 41,
+  "tmin_f": 28,
+  "precip_in": 0.0,
+  "snow_in": 0,
+  "source": "Open-Meteo Historical Weather API (ERA5)",
+  "retrieved": "2026-11-04",
+  "era_label": "COVID-ERA"
+}

@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.distortedreality.example/decision_rule.schema.json",
+  "title": "Contract IG4: decision_rule.yaml (pre-registered; hashed and journaled before any execution)",
+  "description": "Structural contract. The co-signed X9 values are pinned by conformance_checks.py against schemas/decision_rule.yaml, not hard-coded here, so a later rule is a new rule_id with a new hash.",
+  "type": "object",
+  "properties": {
+    "rule_id": {
+      "type": "string",
+      "pattern": "^dr-[a-z0-9-]+$"
+    },
+    "eligibility": {
+      "type": "object",
+      "properties": {
+        "claims_verdict": {
+          "const": "CLAIMS_HOLD"
+        },
+        "unsupported_claims_max": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "false_alarms_max_fraction_of_cases": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "required": [
+        "claims_verdict",
+        "unsupported_claims_max",
+        "false_alarms_max_fraction_of_cases"
+      ],
+      "additionalProperties": false
+    },
+    "ranking": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "prefixItems": [
+        {
+          "type": "object",
+          "properties": {
+            "metric": {
+              "const": "exceptions_caught"
+            }
+          },
+          "required": [
+            "metric"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "metric": {
+              "const": "manual_touches"
+            }
+          },
+          "required": [
+            "metric"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "metric": {
+              "const": "median_cycle_min"
+            }
+          },
+          "required": [
+            "metric"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "items": false,
+      "description": "order is significant; direction per metric is defined in EVIDENCE_SPEC section 6 (higher / lower / lower)"
+    },
+    "minimum_margin": {
+      "type": "object",
+      "properties": {
+        "exceptions_caught": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "exceptions_caught"
+      ],
+      "additionalProperties": false
+    },
+    "outcomes": {
+      "const": [
+        "PATH_PREFERRED_UNDER_ASSUMPTIONS",
+        "NO_SUFFICIENT_EVIDENCE"
+      ]
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "rule_id",
+    "eligibility",
+    "ranking",
+    "minimum_margin",
+    "outcomes",
+    "notes"
+  ],
+  "additionalProperties": false
+}

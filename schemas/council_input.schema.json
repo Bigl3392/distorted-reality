@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.distortedreality.example/council_input.schema.json",
+  "title": "Contract C1: scan -> council",
+  "type": "object",
+  "properties": {
+    "contract": {
+      "const": "C1"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+    },
+    "mri": {
+      "$ref": "mri_inventory.schema.json"
+    },
+    "scan": {
+      "$ref": "scan_result.schema.json"
+    },
+    "constraints": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "test_definition": {
+      "$ref": "#/$defs/test_def"
+    }
+  },
+  "required": [
+    "contract",
+    "run_id",
+    "mri",
+    "scan",
+    "constraints",
+    "test_definition"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "test_def": {
+      "type": "object",
+      "properties": {
+        "test_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+        },
+        "description": {
+          "type": "string"
+        },
+        "metrics": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "exceptions_caught",
+              "false_alarms",
+              "unsupported_claims",
+              "median_cycle_min",
+              "manual_touches"
+            ]
+          }
+        },
+        "decision_rule_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "test_id",
+        "description",
+        "metrics",
+        "decision_rule_sha256"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

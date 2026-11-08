@@ -1,0 +1,466 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.distortedreality.example/council_run.schema.json",
+  "title": "Council run record (all agent work visible)",
+  "type": "object",
+  "properties": {
+    "label": {
+      "const": "SYNTHETIC"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+    },
+    "models": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "role->pinned model id"
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "facts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "uncertainties": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "mri",
+              "scan",
+              "dataset_manifest"
+            ]
+          }
+        }
+      },
+      "required": [
+        "facts",
+        "constraints",
+        "uncertainties",
+        "sources"
+      ],
+      "additionalProperties": false
+    },
+    "initial_paths": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "properties": {
+          "path_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+          },
+          "title": {
+            "type": "string"
+          },
+          "intervention": {
+            "type": "object",
+            "properties": {
+              "summary": {
+                "type": "string"
+              },
+              "who_does_what": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "role": {
+                      "type": "string"
+                    },
+                    "does": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "role",
+                    "does"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "order": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "checks": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "automation": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "distinct_from": {
+                "type": "string",
+                "description": "how this differs materially from the other two paths"
+              }
+            },
+            "required": [
+              "summary",
+              "who_does_what",
+              "order",
+              "checks",
+              "automation",
+              "distinct_from"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "path_id",
+          "title",
+          "intervention"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "critic": {
+      "type": "object",
+      "properties": {
+        "verdict": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path_id": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+              },
+              "kind": {
+                "enum": [
+                  "strawman",
+                  "hidden_constraint_violation",
+                  "overlap",
+                  "other"
+                ]
+              },
+              "detail": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "path_id",
+              "kind",
+              "detail"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "parse_status": {
+          "enum": [
+            "parsed",
+            "unparseable_failed_closed"
+          ]
+        }
+      },
+      "required": [
+        "verdict",
+        "findings",
+        "parse_status"
+      ],
+      "additionalProperties": false
+    },
+    "revision": {
+      "type": "object",
+      "properties": {
+        "performed": {
+          "type": "boolean"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "paths": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "object",
+            "properties": {
+              "path_id": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+              },
+              "title": {
+                "type": "string"
+              },
+              "intervention": {
+                "type": "object",
+                "properties": {
+                  "summary": {
+                    "type": "string"
+                  },
+                  "who_does_what": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string"
+                        },
+                        "does": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "role",
+                        "does"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "order": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "checks": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "automation": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "distinct_from": {
+                    "type": "string",
+                    "description": "how this differs materially from the other two paths"
+                  }
+                },
+                "required": [
+                  "summary",
+                  "who_does_what",
+                  "order",
+                  "checks",
+                  "automation",
+                  "distinct_from"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "path_id",
+              "title",
+              "intervention"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "performed",
+        "count",
+        "paths"
+      ],
+      "additionalProperties": false
+    },
+    "shuffle": {
+      "type": "object",
+      "properties": {
+        "seed": {
+          "type": "integer"
+        },
+        "label_map": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+          },
+          "description": "neutral label -> path_id"
+        }
+      },
+      "required": [
+        "seed",
+        "label_map"
+      ],
+      "additionalProperties": false
+    },
+    "decision": {
+      "type": "object",
+      "properties": {
+        "recommended_label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "recommended_path_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "no_winner": {
+          "type": "boolean"
+        },
+        "comparison": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "risks": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              }
+            },
+            "required": [
+              "label",
+              "rationale",
+              "risks",
+              "confidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "qualitative_only": {
+          "const": true
+        }
+      },
+      "required": [
+        "recommended_label",
+        "recommended_path_id",
+        "no_winner",
+        "comparison",
+        "qualitative_only"
+      ],
+      "additionalProperties": false
+    },
+    "agent_calls": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "call_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+          },
+          "role": {
+            "enum": [
+              "evidence",
+              "path",
+              "critic",
+              "decision",
+              "coder",
+              "guard"
+            ]
+          },
+          "requested_model": {
+            "type": "string"
+          },
+          "response_model": {
+            "type": "string"
+          },
+          "model_match": {
+            "type": "boolean"
+          },
+          "started": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ended": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "prompt_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "response_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "tokens_in": {
+            "type": "integer"
+          },
+          "tokens_out": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "call_id",
+          "role",
+          "requested_model",
+          "response_model",
+          "model_match",
+          "started",
+          "ended",
+          "prompt_sha256",
+          "response_sha256",
+          "tokens_in",
+          "tokens_out"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "label",
+    "run_id",
+    "models",
+    "evidence",
+    "initial_paths",
+    "critic",
+    "revision",
+    "shuffle",
+    "decision",
+    "agent_calls"
+  ],
+  "additionalProperties": false
+}

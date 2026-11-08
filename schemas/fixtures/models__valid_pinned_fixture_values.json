@@ -1,0 +1,48 @@
+{
+  "models_status": "PINNED",
+  "base_url": "https://api.vultrinference.com/v1",
+  "roles": {
+    "evidence": {
+      "model_id": "mimo-v2.6-flash",
+      "temperature": 0,
+      "max_tokens": 1
+    },
+    "path": {
+      "model_id": "glm-5.3",
+      "temperature": 0,
+      "max_tokens": 1
+    },
+    "critic": {
+      "model_id": "deepseek-v4.1-flash-1017",
+      "temperature": 0,
+      "max_tokens": 1
+    },
+    "decision": {
+      "model_id": "mimo-v2.6-pro",
+      "temperature": 0,
+      "max_tokens": 1
+    },
+    "coder": {
+      "model_id": "glm-5.3",
+      "temperature": 0,
+      "max_tokens": 1
+    },
+    "guard": {
+      "model_id": "nemotron-3.5-content-safety",
+      "temperature": 0,
+      "max_tokens": 1,
+      "enabled": false
+    }
+  },
+  "budget_fallback": {
+    "applies_to": [
+      "path",
+      "coder"
+    ],
+    "model_id": "glm-5.3-flash"
+  },
+  "excluded": [
+    "raon-1-mini-preview",
+    "auk"
+  ]
+}

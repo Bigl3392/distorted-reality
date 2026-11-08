@@ -1,0 +1,256 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.distortedreality.example/models.schema.json",
+  "title": "Contract IG3: models.yaml (validated in its JSON form)",
+  "description": "TEMPLATE = committed example; temperature and max_tokens may be UNSET. PINNED = the runtime file; the app refuses to start on any UNSET, a missing role, or an unknown key. Cross-field rules (critic family differs from path; decision differs from path) are enforced by conformance_checks.py and broker code, not by JSON Schema.",
+  "type": "object",
+  "properties": {
+    "models_status": {
+      "enum": [
+        "TEMPLATE",
+        "PINNED"
+      ]
+    },
+    "base_url": {
+      "const": "https://api.vultrinference.com/v1"
+    },
+    "roles": {
+      "type": "object",
+      "properties": {
+        "evidence": {
+          "$ref": "#/$defs/role_t"
+        },
+        "path": {
+          "$ref": "#/$defs/role_t"
+        },
+        "critic": {
+          "$ref": "#/$defs/role_t"
+        },
+        "decision": {
+          "$ref": "#/$defs/role_t"
+        },
+        "coder": {
+          "$ref": "#/$defs/role_t"
+        },
+        "guard": {
+          "$ref": "#/$defs/guard_t"
+        }
+      },
+      "required": [
+        "evidence",
+        "path",
+        "critic",
+        "decision",
+        "coder"
+      ],
+      "additionalProperties": false
+    },
+    "budget_fallback": {
+      "type": "object",
+      "properties": {
+        "applies_to": {
+          "const": [
+            "path",
+            "coder"
+          ]
+        },
+        "model_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        }
+      },
+      "required": [
+        "applies_to",
+        "model_id"
+      ],
+      "additionalProperties": false
+    },
+    "excluded": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "models_status",
+    "base_url",
+    "roles",
+    "budget_fallback",
+    "excluded"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "models_status": {
+            "const": "PINNED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "roles": {
+            "properties": {
+              "evidence": {
+                "$ref": "#/$defs/role_p"
+              },
+              "path": {
+                "$ref": "#/$defs/role_p"
+              },
+              "critic": {
+                "$ref": "#/$defs/role_p"
+              },
+              "decision": {
+                "$ref": "#/$defs/role_p"
+              },
+              "coder": {
+                "$ref": "#/$defs/role_p"
+              },
+              "guard": {
+                "$ref": "#/$defs/guard_p"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "role_t": {
+      "type": "object",
+      "properties": {
+        "model_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "description": "exact string; UNSET is not matchable"
+        },
+        "temperature": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 2
+            },
+            {
+              "const": "UNSET"
+            }
+          ]
+        },
+        "max_tokens": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "const": "UNSET"
+            }
+          ]
+        }
+      },
+      "required": [
+        "model_id",
+        "temperature",
+        "max_tokens"
+      ],
+      "additionalProperties": false
+    },
+    "role_p": {
+      "type": "object",
+      "properties": {
+        "model_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        },
+        "temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "max_tokens": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "model_id",
+        "temperature",
+        "max_tokens"
+      ],
+      "additionalProperties": false
+    },
+    "guard_t": {
+      "type": "object",
+      "properties": {
+        "model_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "description": "exact string; UNSET is not matchable"
+        },
+        "temperature": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 2
+            },
+            {
+              "const": "UNSET"
+            }
+          ]
+        },
+        "max_tokens": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "const": "UNSET"
+            }
+          ]
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "model_id",
+        "temperature",
+        "max_tokens",
+        "enabled"
+      ],
+      "additionalProperties": false
+    },
+    "guard_p": {
+      "type": "object",
+      "properties": {
+        "model_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        },
+        "temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "max_tokens": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "model_id",
+        "temperature",
+        "max_tokens",
+        "enabled"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

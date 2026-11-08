@@ -1,0 +1,20 @@
+{
+  "run_id": "run-001",
+  "path_id": "path-b",
+  "claims_total": 200,
+  "supported": 193,
+  "unsupported": 7,
+  "contradicted": 0,
+  "claims": [
+    {
+      "claim_id": "clm-0007",
+      "step_id": 3,
+      "case_id": "inv-0007",
+      "claimed": "receipt logged",
+      "evidence_ref": null,
+      "result": "UNSUPPORTED",
+      "reason": "no evidence_ref"
+    }
+  ],
+  "recomputed_by": "control_plane"
+}
